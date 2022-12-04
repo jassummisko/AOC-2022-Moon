@@ -1,47 +1,21 @@
---A = Rock
---B = Paper
---C = Scissors
---X = Rock
---Y = Paper
---Z = Scissors
---
---Win = 6
---Draw = 3
---Loss = 0
---Rock = 1
---Paper = 2
---Scissors = 3
-
 results = {
-    "AX": 0+3
-    "AY": 3+1
-    "AZ": 6+2
-    "BX": 0+1
-    "BY": 3+2
-    "BZ": 6+3
-    "CX": 0+2
-    "CY": 3+3
-    "CZ": 6+1
+    "A X": 0+3
+    "A Y": 3+1
+    "A Z": 6+2
+    "B X": 0+1
+    "B Y": 3+2
+    "B Z": 6+3
+    "C X": 0+2
+    "C Y": 3+3
+    "C Z": 6+1
 }
 
-data = {}
-for x in io.lines("2.data")
-    buff = {
-        x\sub(1, 1)
-        x\sub(3, 3)   
-    }
-    table.insert data, buff
-
-processTurn = (turn) ->
-    a = turn[1]
-    b = turn[2]
-    sum = results[a..b]
-    sum
+data = [line for line in io.lines("2.data")]
 
 sum = (tab) ->
     s = 0
     for x in *tab
-        s += processTurn x
+        s += results[x]
     s
 
 print sum data

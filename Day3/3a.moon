@@ -1,10 +1,6 @@
-dec = string.byte
 char = string.char
-string.getC = (str, pos) ->
-    return str\sub(pos, pos)
-
-halve = (str) ->
-    return {str\sub(1, #str/2), str\sub(#str/2+1, #str)}
+string.getC = (str, pos) -> str\sub(pos, pos)
+halve = (str) -> {str\sub(1, #str/2), str\sub(#str/2+1, #str)}
 
 prioScores = {}
 for i=97, 122
@@ -20,18 +16,14 @@ findCommon = (str1, str2) ->
         c = str2\getC(i)
         if lookup[c]
             table.insert res, c
-    return res
+    res
 
 solution = (data) ->
     s = 0
-    for backpack in *inp
+    for backpack in *data
         compartments = halve backpack
         mistake = findCommon(compartments[1], compartments[2])[1]
         s += prioScores[mistake]
     s
-
-inp = {}
-for line in io.lines("3.data")
-    table.insert inp, line
     
-print solution inp
+print solution [line for line in io.lines("3.data")]

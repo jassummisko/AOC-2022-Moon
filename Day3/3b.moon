@@ -1,8 +1,5 @@
-dec = string.byte
 char = string.char
-flr = math.floor
-string.getC = (str, pos) ->
-    return str\sub(pos, pos)
+string.getC = (str, pos) -> str\sub(pos, pos)
 
 inThrees = (tab) ->
     res = {}
@@ -37,20 +34,12 @@ findCommon = (str1, str2) ->
             table.insert res, c
     return res
 
-findBadge = (group) ->
-    findCommon(tabToString(findCommon(group[1], group[2])), group[3])[1]
+findBadge = (group) -> findCommon(tabToString(findCommon(group[1], group[2])), group[3])[1]
 
 solution = (groups) ->
     s = 0
     for group in *groups
-        c = findBadge(group)
-        s += prioScores[c]
+        s += prioScores[findBadge group]
     s
 
-inp = {}
-for line in io.lines("3.data")
-    table.insert inp, line
-
-groups = inThrees(inp)
-
-print solution(groups)
+print solution inThrees [line for line in io.lines("3.data")]

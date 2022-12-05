@@ -1,14 +1,7 @@
-readLines = (fileName) ->
-    l = {}
-    lines = io.lines fileName
-    for line in lines
-        table.insert(l, line)
-    return l
-
 sum = (tab) ->
     s = 0
     for el in *tab
-        i += el
+        s += el
     s
 
 splitTab = (tab) ->
@@ -22,16 +15,15 @@ splitTab = (tab) ->
             table.insert(t[i], tonumber(el))
     t
 
-solution = ->
-    input = readLines "1.data"
-    raindeers = splitTab input
+solution = (data) ->
+    elves = splitTab data
     largest = 0
 
-    for r in *raindeers
-        s = sum r
+    for el in *elves
+        s = sum el
         if s > largest
             largest = s
 
     largest
 
-print solution!
+print solution [line for line in io.lines("1.data")]

@@ -24,7 +24,7 @@ class Warehouse
         for box in *stack
             insert @stacks[stackNum2].boxes, box
             
-    howContents: =>
+    showContents: =>
         for i, stack in ipairs @stacks
             io.write i .. " "
             for box in *stack.boxes

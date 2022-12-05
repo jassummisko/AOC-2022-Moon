@@ -93,6 +93,7 @@ warehouse_b = with Warehouse("B")
     \addStack(Stack(stack)) for stack in *(readStacks lines)
        
 solution lines, warehouse_a
+warehouse_a\showTopBoxes!   -- part 1
+
 solution lines, warehouse_b
-warehouse_a\showTopBoxes!
-warehouse_b\showTopBoxes!
+warehouse_b\showTopBoxes!   -- part 2

@@ -1,5 +1,5 @@
 pop = (tab) -> table.remove tab, #tab
-split = (inputstr) -> [str for str in string.gmatch(inputstr, "([^%s]+)")]
+string.split = (inputstr) -> [str for str in string.gmatch(inputstr, "([^%s]+)")]
 string.getC = (str, pos) -> string.sub(str, pos, pos)
 insert = table.insert
 
@@ -24,7 +24,7 @@ class Warehouse
         for box in *stack
             insert @stacks[stackNum2].boxes, box
             
-    showContents: =>
+    howContents: =>
         for i, stack in ipairs @stacks
             io.write i .. " "
             for box in *stack.boxes
@@ -37,8 +37,12 @@ class Warehouse
         print ""
 
 parseMove = (line) ->
-    t = split line
-    tonumber(t[2]), tonumber(t[4]), tonumber(t[6])
+    t = line\split!
+    assert(t[1] == "move" and t[3] == "from" and t[5] == "to", "corrupted move line")
+    amount = assert(tonumber(t[2]), "invalid box amount")
+    fromStack = assert(tonumber(t[4]), "invalid source stack")
+    toStack = assert(tonumber(t[6]), "invalid destination stack")
+    amount, fromStack, toStack
 
 readStacks = (data) ->
     numberRow = 0
@@ -56,13 +60,16 @@ readStacks = (data) ->
                 insert numberCols, tonumber(x)
                 b = y+1
             break
+        elseif line\split![1] == "move"
+            error "Corrupted stack"
 
     --Get stack
     for i, col in ipairs numberCols
         insert stacks, {}
         for j = numberRow-1, 1, -1
             box = data[j]\getC(col)
-            if box ~= " " then insert stacks[i], box 
+            if box ~= " " then insert stacks[i], box else break 
+            assert box\match("[%w]") and data[j]\getC(col-1)\match("%[") and data[j]\getC(col+1)\match("%]"), "Corrupted stack"
 
     stacks
 
@@ -74,6 +81,8 @@ solution = (data, warehouse) ->
         if line\find "move"
             moveLine = i
             break
+        if i+1 >= #data
+            error "no moves"
            
     warehouse\move parseMove data[i] for i=moveLine, #data
  

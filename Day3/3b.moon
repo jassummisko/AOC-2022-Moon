@@ -10,7 +10,7 @@ inThrees = (tab) ->
         table.insert res[index], el
         if i % 3 == 0
             index += 1
-    return res
+    res
 
 prioScores = {}
 for i=97, 122
@@ -21,7 +21,7 @@ tabToString = (tab) ->
     str = ""
     for el in *tab
         str ..= el
-    return str
+    str
 
 findCommon = (str1, str2) ->
     res = {}
@@ -32,7 +32,7 @@ findCommon = (str1, str2) ->
         c = str2\getC(i)
         if lookup[c]
             table.insert res, c
-    return res
+    res
 
 findBadge = (group) -> findCommon(tabToString(findCommon(group[1], group[2])), group[3])[1]
 

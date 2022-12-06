@@ -9,10 +9,10 @@ class Signal
 			table.remove @chars, 1
 		@counter += 1
 	match: =>
-		for i=1, #@chars
-			for j=i+1, #@chars
-				if @chars[i] == @chars[j]
-					return true
+		lookup = {}
+		for i in *@chars
+			if lookup[i] return true
+			else lookup[i] = true
 		return false
 	init: =>
 		@add(@input\getC i) for i=1, @passLen

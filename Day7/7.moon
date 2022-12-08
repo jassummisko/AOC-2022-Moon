@@ -62,6 +62,6 @@ solution_b = (fs) ->
 	smallest
 
 fs = FileSystem!
-eval(fs, line) for line in *[line for line in io.lines("7.data")]
+eval(fs, line) for line in io.lines("7.data")
 print solution_a fs
 print solution_b fs

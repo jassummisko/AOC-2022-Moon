@@ -29,7 +29,7 @@ class Warehouse
             io.write i .. " "
             for box in *stack.boxes
                 io.write box .. " "
-            print ""
+            print!
     
     showTopBoxes: =>
         for stack in *@stacks
@@ -49,7 +49,7 @@ readStacks = (data) ->
     numberCols = {}
     stacks = {}
 
-    --Find number line
+    --Find number line and get column positions
     for i, line in ipairs data
         if line\find "1"
             numberRow = i
@@ -61,15 +61,15 @@ readStacks = (data) ->
                 b = y+1
             break
         elseif line\split![1] == "move"
-            error "Corrupted stack"
+            error "Missing stack labels"
 
-    --Get stack
+    --Get stack per column
     for i, col in ipairs numberCols
         insert stacks, {}
         for j = numberRow-1, 1, -1
             box = data[j]\getC(col)
             if box ~= " " then insert stacks[i], box else break 
-            assert box\match("[%w]") and data[j]\getC(col-1)\match("%[") and data[j]\getC(col+1)\match("%]"), "Corrupted stack"
+            assert string.sub(data[j], col-1, col+1)\match("%[%w%]"), "Corrupted stack"
 
     stacks
 

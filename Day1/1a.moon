@@ -12,7 +12,7 @@ splitTab = (tab) ->
             i += 1
             t[i] = {}
         else
-            table.insert(t[i], tonumber(el))
+            table.insert t[i], tonumber(el)
     t
 
 solution = (data) ->
@@ -21,8 +21,7 @@ solution = (data) ->
 
     for el in *elves
         s = sum el
-        if s > largest
-            largest = s
+        largest = s if s > largest
 
     largest
 
